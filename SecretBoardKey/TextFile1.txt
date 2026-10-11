@@ -1,0 +1,56 @@
+﻿using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Windows.Storage.Streams;
+using System;
+using System.IO;
+
+// Метод смены фона (должен быть async)
+private async void ChangeBackgroundWithImage(string filePath)
+{
+    try
+    {
+        if (!File.Exists(filePath)) return;
+
+        // 1. Читаем файл в память асинхронно БЕЗ блокировки WinUI-движком
+        byte[] fileBytes = await File.ReadAllBytesAsync(filePath);
+        
+        // 2. Возвращаемся в UI поток для работы с XAML объектами
+        this.DispatcherQueue.TryEnqueue(async () =>
+        {
+            try
+            {
+                using (InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream())
+                {
+                    using (DataWriter writer = new DataWriter(memoryStream.GetOutputStreamAt(0)))
+                    {
+                        writer.WriteBytes(fileBytes);
+                        await writer.StoreAsync();
+                    }
+
+                    // 3. Создаем источник изображения в памяти
+                    BitmapImage bitmapImage = new BitmapImage();
+                    await bitmapImage.SetSourceAsync(memoryStream);
+
+                    // 4. Создаем кисть и применяем к вашему элементу (например, Grid или Window)
+                    ImageBrush imageBrush = new ImageBrush
+                    {
+                        ImageSource = bitmapImage,
+                        Stretch = Stretch.UniformToFill // Режим заполнения
+                    };
+
+                    // Присваиваем фон (замените myRootGrid на имя вашего корневого контейнера)
+                    myRootGrid.Background = imageBrush;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Запись локальной ошибки, если XAML-объект все же сбоит
+                File.WriteAllText("xaml_image_error.txt", ex.ToString());
+            }
+        });
+    }
+    catch (Exception ex)
+    {
+        File.WriteAllText("file_read_error.txt", ex.ToString());
+    }
+}

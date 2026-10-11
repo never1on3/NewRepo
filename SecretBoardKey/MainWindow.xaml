@@ -1,0 +1,101 @@
+<Window
+    x:Class="SecretBoardKey.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="клавиатура шифрования">
+
+    <Grid Background="#303030">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="160"/>
+            <RowDefinition Height="180"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Image x:Name="BackgroundImage" Grid.Row="0" Grid.ColumnSpan="3" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <Grid x:Name="CustomTitleBar" Grid.Row="0" Grid.ColumnSpan="3" Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="140"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="клавиатура шифрования" VerticalAlignment="Center" Margin="15,0" FontSize="12" Foreground="White"/>
+
+            <Button Content="⚙️Настройки" Grid.Column="1" Background="Transparent" BorderThickness="0">
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Изменение строки заголовка" Click="SelectBackgroundButton_Click"/>
+                        <MenuFlyoutItem Text="Изменение изображения" Click="ReplaceImage_Click"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Выход" Click="ExitButton_Click"/>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+        </Grid>
+
+        <TextBlock Text="Секретный Шифр" Margin="19,0" Grid.Row="3" VerticalAlignment="Top" Style="{StaticResource TitleTextBlockStyle}"/>
+        
+        <Image x:Name="SimpleImage" Source="Assets\Images\denia12.jpg" MaxWidth="400" Grid.Row="1" Grid.Column="0" Margin="2, 15, 3, 0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+        <Rectangle Height="1" Fill="Gray" Grid.Row="2" VerticalAlignment="Top" Margin="0,10,0,10"/>
+        <Rectangle Height="1" Fill="Gray" Grid.Row="1" VerticalAlignment="Top" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,10,0,10"/>
+        <Rectangle Width="1" Fill="Gray" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" HorizontalAlignment="Right"/>
+
+        <TextBox x:Name="EnterText" 
+                 Text="" 
+                 PlaceholderText="Введите текст для расшифровки" 
+                 FontSize="14" 
+                 AcceptsReturn="True" 
+                 TextWrapping="Wrap" 
+                 Margin="10" 
+                 Grid.Row="1" Grid.RowSpan="1" 
+                 Grid.Column="1" 
+                 TextChanged="TextEnter_Changed"/>
+        <TextBox x:Name="outPutText" 
+                  Text="" 
+                  PlaceholderText="Результат расшифровки" 
+                  FontSize="14" 
+                  AcceptsReturn="True" 
+                  TextWrapping="Wrap" 
+                  Margin="10" 
+                  Grid.Row="1" Grid.RowSpan="1" 
+                  Grid.Column="2" />
+        
+        <TextBox x:Name="EnterTextTwo"
+                   Text=""
+                   PlaceholderText="Здесь будет преобразование в UNICODE(RUS)"
+                   FontSize="14"
+                   TextWrapping="Wrap"
+                   Margin="10"
+                   Grid.Row="2" Grid.RowSpan="3"
+                   Grid.Column="1"
+                   TextChanged="TextEnter_ChangeToUnicode"/>
+        
+        <TextBox x:Name="outPutTextUnicode" 
+          Text="" 
+          PlaceholderText="Результат шифровки" 
+          FontSize="14" 
+          AcceptsReturn="True" 
+          TextWrapping="Wrap" 
+          Margin="10" 
+          Grid.Row="2" Grid.RowSpan="3" 
+          Grid.Column="2" />
+
+        <StackPanel x:Name="ControlPanel" Padding="20" Spacing="15" Grid.Row="2" Grid.Column="0">
+            <ToggleSwitch x:Name="HookToggleSwitch" 
+                          Header="Состояние Шифрования" 
+                          OffContent="Выключен"
+                          OnContent="Включен" 
+                          Toggled="HookToggleSwitch_Toggled"/>
+            <TextBlock x:Name="StatusTextBlock" Foreground="Gray" Text="Шифрование не активно"/>
+        </StackPanel>
+        
+    </Grid>
+</Window>

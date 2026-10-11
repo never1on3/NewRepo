@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SecretBoardKey (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "SecretBoardKey (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
