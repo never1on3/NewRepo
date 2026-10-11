@@ -136,24 +136,19 @@ namespace SecretBoardKey
             try
             {
                 string originalText = EnterTextTwo.Text;
-
                 if (string.IsNullOrEmpty(originalText))
                 {
                     outPutTextUnicode.Text = string.Empty;
                     return;
                 }
-
                 if (_alphabetMain == null)
                     throw new InvalidOperationException("_alphabetMain is null");
-
                 string decryptedTextUnicode = _alphabetMain.DecryptToUnicode(originalText);
                 outPutTextUnicode.Text = decryptedTextUnicode;
             }
             catch (Exception ex)
             {
-                // Сразу увидите настоящую причину
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
-                // или MessageBox.Show(ex.ToString());
                 outPutTextUnicode.Text = "Ошибка: " + ex.Message;
             }
         }

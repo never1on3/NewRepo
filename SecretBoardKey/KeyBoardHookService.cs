@@ -143,7 +143,7 @@ namespace SecretBoardKey
                 bool isPacket = pKeyStruct.vkCode == VK_PACKET;
                 bool isOurSelfGeneratedInput = pKeyStruct.dwExtraInfo == HOOK_MAGIC_NUMBER;
 
-                // Если это ЛЮБОЙ эмулированный сигнал включая наш собственный — пропускаем без обработки
+                // Если это эмулированный сигнал включая наш собственный пропускаем без обработки
                 if (isInjected || isPacket || isOurSelfGeneratedInput)
                 {
                     return CallNextHookEx(_hookID, nCode, wParam, lParam);
@@ -185,7 +185,7 @@ namespace SecretBoardKey
                         {
                             wScan = ch,
                             dwFlags = KEYEVENTF_UNICODE,
-                            dwExtraInfo = HOOK_MAGIC_NUMBER // Метка, чтобы хук узнал свое событие
+                            dwExtraInfo = HOOK_MAGIC_NUMBER 
                         }
                     }
                 };
@@ -285,12 +285,10 @@ namespace SecretBoardKey
     {
         // Объявляем приватное поле для хранения алфавита в классе
         private readonly Dictionary<uint, string> _alphabet;
-        // Конструктор: сохраняем переданный алфавит в поле класса
         public UnicodeDecrypter(Dictionary<uint, string> alphabet)
         {
             _alphabet = alphabet ?? throw new ArgumentNullException(nameof(alphabet));
         }
-        // Метод дешифровки, использующий переданный извне словарь
         public string DecryptToUnicode(string inputText, Dictionary<uint, string> unicodeReserveAlphabet)
         {
             if (inputText == null) return string.Empty;
@@ -306,14 +304,12 @@ namespace SecretBoardKey
                 else
                     decryptedText.Append(ch);
             }
-
             return decryptedText.ToString();
         }
 
         // Перегрузка метода, использующая сохраненный в классе словарь _alphabet
         internal string DecryptToUnicode(string originalText)
         {
-            // Передаем в основной метод текст и поле _alphabet класса
             return DecryptToUnicode(originalText, _alphabet);
         }
 
