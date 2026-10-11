@@ -17,8 +17,8 @@ namespace SecretBoardKey
         private const uint KEYEVENTF_KEYUP = 0x0002;
         private const uint LLKHF_INJECTED = 0x00000010;
 
-        private const uint VK_PACKET = 0xE7; // Код эмулированного Unicode-символа
-        private static readonly IntPtr HOOK_MAGIC_NUMBER = new IntPtr(0x1337); // Метка для SendInput
+        private const uint VK_PACKET = 0xE7; // код эмулированного Unicode-символа
+        private static readonly IntPtr HOOK_MAGIC_NUMBER = new IntPtr(0x1337); // метка для SendInput
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
@@ -111,7 +111,7 @@ namespace SecretBoardKey
 
         public bool Start()
         {
-            Stop(); // Защита от двойного запуска
+            Stop(); // защита от двойного запуска
 
             _hookDelegate = HookCallback;
             using (var curProcess = Process.GetCurrentProcess())
@@ -143,25 +143,25 @@ namespace SecretBoardKey
                 bool isPacket = pKeyStruct.vkCode == VK_PACKET;
                 bool isOurSelfGeneratedInput = pKeyStruct.dwExtraInfo == HOOK_MAGIC_NUMBER;
 
-                // Если это эмулированный сигнал включая наш собственный пропускаем без обработки
+                // если это эмулированный сигнал включая наш собственный пропускаем без обработки
                 if (isInjected || isPacket || isOurSelfGeneratedInput)
                 {
                     return CallNextHookEx(_hookID, nCode, wParam, lParam);
                 }
 
-                // Проверяем раскладку
+                // проверяем раскладку
                 IntPtr hwnd = GetForegroundWindow();
                 uint threadId = GetWindowThreadProcessId(hwnd, out _);
                 IntPtr currentLayout = GetKeyboardLayout(threadId);
 
-                if ((ushort)((long)currentLayout & 0xFFFF) == 0x0419) // Русская раскладка
+                if ((ushort)((long)currentLayout & 0xFFFF) == 0x0419) // русская раскладка
                 {
                     if (chipherAlphabet.VkTochipher.TryGetValue(pKeyStruct.vkCode, out string replacementStr))
                     {
-                        // Отправляем замену с нашей меткой HOOK_MAGIC_NUMBER
+                        // оотправляем замену с нашей меткой HOOK_MAGIC_NUMBER
                         CustomSendString(replacementStr);
 
-                        // Подавляем ориг нажатие физической клавиши
+                        // подавляем ориг нажатие физической клавиши
                         return (IntPtr)1;
                     }
                 }
@@ -200,7 +200,7 @@ namespace SecretBoardKey
                         {
                             wScan = ch,
                             dwFlags = KEYEVENTF_UNICODE | KEYEVENTF_KEYUP,
-                            dwExtraInfo = HOOK_MAGIC_NUMBER // Метка, чтобы хук узнал свое событие
+                            dwExtraInfo = HOOK_MAGIC_NUMBER // метка, чтобы хук узнал свое событие
                         }
                     }
                 };
@@ -215,7 +215,7 @@ namespace SecretBoardKey
         private class TrieNode
         {
             public Dictionary<char, TrieNode> Children = new();
-            public char? TargetChar; // Расшифрованный символ
+            public char? TargetChar; // расшифрованный  символ
         }
 
         private readonly TrieNode _root = new();
@@ -283,7 +283,7 @@ namespace SecretBoardKey
 
     public class UnicodeDecrypter
     {
-        // Объявляем приватное поле для хранения алфавита в классе
+        // лбъявляем приватное поле для хранения алфавита в классе
         private readonly Dictionary<uint, string> _alphabet;
         public UnicodeDecrypter(Dictionary<uint, string> alphabet)
         {
@@ -307,7 +307,7 @@ namespace SecretBoardKey
             return decryptedText.ToString();
         }
 
-        // Перегрузка метода, использующая сохраненный в классе словарь _alphabet
+        // перегрузка метода, использующая сохраненный в классе словарь _alphabet
         internal string DecryptToUnicode(string originalText)
         {
             return DecryptToUnicode(originalText, _alphabet);
