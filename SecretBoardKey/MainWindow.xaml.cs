@@ -56,6 +56,7 @@ namespace SecretBoardKey
             this.Closed += MainWindow_Closed;
         }
 
+        //изменения строки заголовка(сверху тонкая линия)
         private async void SelectBackgroundButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -153,8 +154,6 @@ namespace SecretBoardKey
             }
         }
 
-
-
         private void HookToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             if (HookToggleSwitch.IsOn)
@@ -182,27 +181,35 @@ namespace SecretBoardKey
             _hookService.Stop();
         }
 
+        // это изменяет слева прямоугольное фото
         private async void ReplaceImage_Click(object sender, RoutedEventArgs e)
         {
-            FileOpenPicker openPickerTwo = new FileOpenPicker();
-
-            IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
-            WinRT.Interop.InitializeWithWindow.Initialize(openPickerTwo, hwnd);
-
-            openPickerTwo.ViewMode = PickerViewMode.Thumbnail;
-            openPickerTwo.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-            openPickerTwo.FileTypeFilter.Add(".jpg");
-            openPickerTwo.FileTypeFilter.Add(".jpeg");
-            openPickerTwo.FileTypeFilter.Add(".png");
-            StorageFile fileTwo = await openPickerTwo.PickSingleFileAsync();
-            if (fileTwo != null)
+            try
             {
-                BitmapImage bitmapImage = new BitmapImage();
-                using (var stream = await fileTwo.OpenAsync(FileAccessMode.Read))
+                FileOpenPicker openPickerTwo = new FileOpenPicker();
+
+                IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+                WinRT.Interop.InitializeWithWindow.Initialize(openPickerTwo, hwnd);
+
+                openPickerTwo.ViewMode = PickerViewMode.Thumbnail;
+                openPickerTwo.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+                openPickerTwo.FileTypeFilter.Add(".jpg");
+                openPickerTwo.FileTypeFilter.Add(".jpeg");
+                openPickerTwo.FileTypeFilter.Add(".png");
+                StorageFile fileTwo = await openPickerTwo.PickSingleFileAsync();
+                if (fileTwo != null)
                 {
-                    await bitmapImage.SetSourceAsync(stream);
+                    BitmapImage bitmapImage = new BitmapImage();
+                    using (var stream = await fileTwo.OpenAsync(FileAccessMode.Read))
+                    {
+                        await bitmapImage.SetSourceAsync(stream);
+                    }
+                    SimpleImage.Source = bitmapImage;
                 }
-                SimpleImage.Source = bitmapImage;
+            }
+            catch (Exception ex)
+            {
+                File.WriteAllText("background_change_error.txt", ex.ToString());
             }
         }
 
