@@ -111,7 +111,7 @@ namespace SecretBoardKey
 
         public bool Start()
         {
-            Stop(); // Защита от двойного запуска
+            Stop(); // защита от двойного запуска
 
             _hookDelegate = HookCallback;
             using (var curProcess = Process.GetCurrentProcess())
@@ -149,7 +149,7 @@ namespace SecretBoardKey
                     return CallNextHookEx(_hookID, nCode, wParam, lParam);
                 }
 
-                // Проверяем раскладку
+                // проверяем раскладку
                 IntPtr hwnd = GetForegroundWindow();
                 uint threadId = GetWindowThreadProcessId(hwnd, out _);
                 IntPtr currentLayout = GetKeyboardLayout(threadId);
