@@ -215,7 +215,7 @@ namespace SecretBoardKey
         private class TrieNode
         {
             public Dictionary<char, TrieNode> Children = new();
-            public char? TargetChar; // расшифрованный  символ
+            public char? TargetChar; // расшифрованный символ
         }
 
         private readonly TrieNode _root = new();
