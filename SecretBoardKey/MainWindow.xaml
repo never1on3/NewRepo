@@ -25,7 +25,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="140"/>
             </Grid.ColumnDefinitions>
-
+ 
             <TextBlock Text="клавиатура шифрования" VerticalAlignment="Center" Margin="15,0" FontSize="12" Foreground="White"/>
 
             <Button Content="⚙️Настройки" Grid.Column="1" Background="Transparent" BorderThickness="0">
@@ -41,12 +41,20 @@
         </Grid>
 
         <TextBlock Text="Секретный Шифр" Margin="19,0" Grid.Row="3" VerticalAlignment="Top" Style="{StaticResource TitleTextBlockStyle}"/>
-        
-        <Image x:Name="SimpleImage" Source="/Assets/Images/best firefly ar (1).jpg" MaxWidth="400" Grid.Row="1" Grid.Column="0" Margin="6, 2, 3, 0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-        <Rectangle Height="1" Fill="Gray" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Top" Margin="0,0,0,5"/>
+        <Image x:Name="SimpleImage" 
+           Source="/Assets/Images/anime-style-clouds.jpg" 
+           Grid.Row="1" 
+           Grid.Column="0" 
+           Grid.RowSpan="3" 
+           Margin="0, 0, 0, 0" 
+           HorizontalAlignment="Center" 
+           VerticalAlignment="Center"
+           Stretch="UniformToFill"/>
+
+        <Rectangle Height="1" Fill="Gray" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Top" Margin="0,0,0,5"/>
         <Rectangle Height="1" Fill="Gray" Grid.Row="1" VerticalAlignment="Top" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,0"/>
-        <Rectangle Width="1" Fill="Gray" Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" HorizontalAlignment="Left" Margin="3,0,0,0"/>
+        <Rectangle Width="1" Fill="Gray" Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0"/>
         
         <TextBox x:Name="EnterText" 
                  Text="" 
@@ -88,7 +96,7 @@
           Grid.Row="2" Grid.RowSpan="3" 
           Grid.Column="2" />
 
-        <StackPanel x:Name="ControlPanel" Padding="20" Spacing="15" Grid.Row="2" Grid.Column="0">
+        <StackPanel x:Name="ControlPanel" Padding="20" Spacing="15" Grid.Row="1" Grid.Column="0">
             <ToggleSwitch x:Name="HookToggleSwitch" 
                           Header="Состояние Шифрования" 
                           OffContent="Выключен"
