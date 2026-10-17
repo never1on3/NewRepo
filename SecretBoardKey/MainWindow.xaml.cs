@@ -1,3 +1,5 @@
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -15,9 +17,12 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using System.Text;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -37,6 +42,10 @@ namespace SecretBoardKey
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(CustomTitleBar);
             _ = TryLoadSavedBackgroundAsync();
+            if (this.Content is FrameworkElement rootElement)
+            {
+                rootElement.Loaded += MyWindow_Loaded;
+            }
 
             string iconPath = System.IO.Path.Combine(Windows.ApplicationModel.Package.Current.InstalledLocation.Path, "Assets/Images/icoIconMain.ico");
             this.AppWindow.SetIcon(iconPath);
@@ -54,6 +63,19 @@ namespace SecretBoardKey
                 appWindow.Resize(new Windows.Graphics.SizeInt32(800, 500));
             }
             this.Closed += MainWindow_Closed;
+        }
+
+        private async void NewWindow_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var secondWindow = new SecondWindow();
+                secondWindow.Activate();
+            }
+            catch (Exception ex)
+            {
+                File.WriteAllText("Open_new_window_error.txt", ex.ToString());
+            }
         }
 
         //изменения строки заголовка(сверху тонкая линия)
@@ -205,11 +227,38 @@ namespace SecretBoardKey
                         await bitmapImage.SetSourceAsync(stream);
                     }
                     SimpleImage.Source = bitmapImage;
+                    string token = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(fileTwo);
+                    var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+                    localSettings.Values["LastPickedFileToken"] = token;
                 }
             }
             catch (Exception ex)
             {
                 File.WriteAllText("background_change_error.txt", ex.ToString());
+            }
+        }
+
+        private async void MyWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            if (!localSettings.Values.ContainsKey("LastPickedFileToken")) return;
+            string token = localSettings.Values["LastPickedFileToken"]?.ToString();
+            try
+            {
+                // Спокойно используем await, так как метод помечен как async void
+                StorageFile savedFile = await Windows.Storage.AccessCache.StorageApplicationPermissions
+                    .FutureAccessList.GetFileAsync(token);
+
+                BitmapImage bitmapImage = new BitmapImage();
+                using (var stream = await savedFile.OpenAsync(FileAccessMode.Read))
+                {
+                    await bitmapImage.SetSourceAsync(stream);
+                }
+                SimpleImage.Source = bitmapImage;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка при автозагрузке: {ex.Message}");
             }
         }
 
