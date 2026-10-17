@@ -283,7 +283,7 @@ namespace SecretBoardKey
 
     public class UnicodeDecrypter
     {
-        // лбъявляем приватное поле для хранения алфавита в классе
+        // объявляем приватное поле для хранения алфавита в классе
         private readonly Dictionary<uint, string> _alphabet;
         public UnicodeDecrypter(Dictionary<uint, string> alphabet)
         {
