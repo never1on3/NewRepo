@@ -193,8 +193,6 @@ namespace SecretBoardKey
         // это изменяет слева прямоугольное фото
         private async void ReplaceImage_Click(object sender, RoutedEventArgs e)
         {
-            //var secondWindow = new SecondWindow();
-            //secondWindow.Activate();
             try
             {
                 FileOpenPicker openPickerTwo = new FileOpenPicker();
