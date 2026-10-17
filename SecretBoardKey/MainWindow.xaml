@@ -33,6 +33,7 @@
                     <MenuFlyout>
                         <MenuFlyoutItem Text="Изменение строки заголовка" Click="SelectBackgroundButton_Click"/>
                         <MenuFlyoutItem Text="Изменение изображения" Click="ReplaceImage_Click"/>
+                        <MenuFlyoutItem Text="Тест" Click="NewWindow_Click"/>
                         <MenuFlyoutSeparator/>
                         <MenuFlyoutItem Text="Выход" Click="ExitButton_Click"/>
                     </MenuFlyout>
@@ -43,14 +44,15 @@
         <TextBlock Text="Секретный Шифр" Margin="19,0" Grid.Row="3" VerticalAlignment="Top" Style="{StaticResource TitleTextBlockStyle}"/>
 
         <Image x:Name="SimpleImage" 
-           Source="/Assets/Images/anime-style-clouds.jpg" 
+           Source="/Assets/Images/Picsart_26-04-08_01-48-46-139.jpg" 
            Grid.Row="1" 
            Grid.Column="0" 
            Grid.RowSpan="3" 
            Margin="0, 0, 0, 0" 
            HorizontalAlignment="Center" 
            VerticalAlignment="Center"
-           Stretch="UniformToFill"/>
+           Stretch="UniformToFill"
+           Opacity="0.8"/>
 
         <Rectangle Height="1" Fill="Gray" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Top" Margin="0,0,0,5"/>
         <Rectangle Height="1" Fill="Gray" Grid.Row="1" VerticalAlignment="Top" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,0"/>
@@ -102,7 +104,7 @@
                           OffContent="Выключен"
                           OnContent="Включен" 
                           Toggled="HookToggleSwitch_Toggled"/>
-            <TextBlock x:Name="StatusTextBlock" Foreground="Gray" Text="Шифрование не активно"/>
+            <TextBlock x:Name="StatusTextBlock" Foreground="Black" Text="Шифрование не активно"/>
         </StackPanel>
         
     </Grid>

@@ -12,18 +12,8 @@
     <Window.SystemBackdrop>
         <MicaBackdrop />
     </Window.SystemBackdrop>
-    
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-     <Grid.RowDefinitions>
-        <RowDefinition Height="32"/>
-        <RowDefinition Height="160"/>
-        <RowDefinition Height="180"/>
-        <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
 
         <Grid x:Name="CustomTwoTitleBar" Grid.Row="0" Grid.ColumnSpan="3" Background="Transparent">
             <Grid.ColumnDefinitions>
@@ -35,8 +25,5 @@
             <TextBlock Text="SETTING" VerticalAlignment="Center" Margin="15,0" FontSize="12" Foreground="White"/>
         </Grid>
 
-        <Rectangle Height="1" Fill="Gray" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Top" Margin="0,0,0,5"/>
-        <Rectangle Height="1" Fill="Gray" Grid.Row="1" VerticalAlignment="Top" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,0"/>
-        <Rectangle Width="1" Fill="Gray" Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0"/>
     </Grid>
 </Window>

@@ -65,6 +65,19 @@ namespace SecretBoardKey
             this.Closed += MainWindow_Closed;
         }
 
+        private async void NewWindow_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var secondWindow = new SecondWindow();
+                secondWindow.Activate();
+            }
+            catch (Exception ex)
+            {
+                File.WriteAllText("Open_new_window_error.txt", ex.ToString());
+            }
+        }
+
         //изменения строки заголовка(сверху тонкая линия)
         private async void SelectBackgroundButton_Click(object sender, RoutedEventArgs e)
         {
