@@ -13,24 +13,35 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid x:Name="ContentArea" Padding="20">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
+            <RowDefinition Height="200"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="240"/>
         </Grid.ColumnDefinitions>
+        
+        <Grid x:Name="CustomTitleBar" Grid.Row="0" Grid.ColumnSpan="2" Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="140"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="SETTING" VerticalAlignment="Center" Margin="15,0" FontSize="12" Foreground="White"/>
+        </Grid>
 
         <ListView x:Name="ImagesListView"
-                  Grid.Column="0"
+                  Grid.Column="1"
                   Grid.Row="1"
                   SelectionChanged="ImagesListView_SelectionChanged"
                   Margin="0,0,10,0" />
 
         <Image x:Name="TargetImage"
-               Grid.Column="1"
+               Grid.Column="0"
                Grid.Row="1"
                Stretch="Uniform"
                Margin="10,0,0,0" />

@@ -17,7 +17,12 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Image x:Name="BackgroundImage" Grid.Row="0" Grid.ColumnSpan="3" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Image x:Name="BackgroundImage" 
+               Grid.Row="0" Grid.ColumnSpan="3" 
+               Stretch="UniformToFill" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"
+               Source="/Assets/Images/Picsart_26-04-08_01-48-46-139.jpg"/>
 
         <Grid x:Name="CustomTitleBar" Grid.Row="0" Grid.ColumnSpan="3" Background="Transparent">
             <Grid.ColumnDefinitions>

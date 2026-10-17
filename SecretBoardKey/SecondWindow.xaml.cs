@@ -30,6 +30,7 @@ public sealed partial class SecondWindow : Window
     {
         InitializeComponent();
         LoadImagesList();
+        SetTitleBar(CustomTitleBar);
         ExtendsContentIntoTitleBar = true;
 
         IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
@@ -39,7 +40,7 @@ public sealed partial class SecondWindow : Window
         {
             overlappedPresenter.IsResizable = false;
             overlappedPresenter.IsMaximizable = false;
-            appWindow.Resize(new Windows.Graphics.SizeInt32(500, 600));
+            appWindow.Resize(new Windows.Graphics.SizeInt32(500, 250));
         }
     }
 
